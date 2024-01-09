@@ -10,16 +10,16 @@ export class Item {
     @Column()
     name: string;
 
-    @Column({ type: "timestamptz" })
-    created_at;
+    // @Column({ type: "timestamptz" })
+    // created_at: number;
 
-    @Column({
-        type: "enum",
-        enum: ["paid", "unpaid"],
-        default: "unpaid",
-    })
-    status: ItemStatus;
+    // @Column({
+    //     type: "enum",
+    //     enum: ["paid", "unpaid"],
+    //     default: "unpaid",
+    // })
+    // status: ItemStatus;
 
     @Column({ type: "decimal" })
-    price;
+    price: number;
 }
