@@ -1,15 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { DataSource } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { User } from "./entities/item.entity";
 
 @Injectable()
 export class ItemsService {
     constructor(
         private configService: ConfigService,
-        private dataSource: DataSource
+        @InjectRepository(User) private usersRepository: Repository<User>
     ) {}
 
-    async findAll() {
-        return "hello world";
+    findAll(): Promise<User[]> {
+        return this.usersRepository.find();
     }
 }

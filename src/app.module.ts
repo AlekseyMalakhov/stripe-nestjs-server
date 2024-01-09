@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ItemsModule } from "./items/items.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { User } from "./items/entities/item.entity";
 
 @Module({
     imports: [
@@ -14,7 +15,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
             username: process.env.PGUSER,
             password: process.env.PGPASSWORD,
             database: "postgres",
-            entities: [],
+            entities: [User],
             synchronize: true,
         }),
     ],
