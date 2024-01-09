@@ -1,16 +1,25 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
+export type ItemStatus = "paid" | "unpaid";
+
 @Entity()
-export class User {
+export class Item {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    name: string;
 
-    @Column()
-    lastName: string;
+    @Column({ type: "timestamptz" })
+    created_at;
 
-    @Column({ default: true })
-    isActive: boolean;
+    @Column({
+        type: "enum",
+        enum: ["paid", "unpaid"],
+        default: "unpaid",
+    })
+    status: ItemStatus;
+
+    @Column({ type: "decimal" })
+    price;
 }

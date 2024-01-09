@@ -3,7 +3,7 @@ import { ItemsController } from "./items.controller";
 import { ItemsService } from "./items.service";
 import { ConfigModule } from "@nestjs/config";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { User } from "./entities/item.entity";
+import { Item } from "./entities/item.entity";
 
 describe("ItemsController", () => {
     let controller: ItemsController;
@@ -14,7 +14,7 @@ describe("ItemsController", () => {
             providers: [
                 ItemsService,
                 {
-                    provide: getRepositoryToken(User),
+                    provide: getRepositoryToken(Item),
                     useValue: ["some mock value"],
                 },
             ],
