@@ -3,6 +3,6 @@ import { ConfigModule } from "@nestjs/config";
 import { ItemsModule } from "./items/items.module";
 
 @Module({
-    imports: [ConfigModule, ItemsModule],
+    imports: [ConfigModule.forRoot({ cache: true }), ItemsModule],
 })
 export class AppModule {}
