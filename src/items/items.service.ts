@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { Pool } from "pg";
 
 @Injectable()
 export class ItemsService {
-    constructor(private configService: ConfigService) {
-        this.dbURL = this.configService.get<string>("PGDATABASE");
-    }
+    constructor(private configService: ConfigService) {}
+    pool = new Pool();
 
-    dbURL;
-
-    findAll() {
-        console.log(this.dbURL);
-        return `This action returns all items`;
+    async findAll() {
+        const client = await this.pool.connect();
+        const res = await client.query("select * from items");
+        client.release();
+        return res.rows;
     }
 }
