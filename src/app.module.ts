@@ -17,6 +17,7 @@ import { User } from "./items/entities/item.entity";
             database: "postgres",
             entities: [User],
             synchronize: true,
+            autoLoadEntities: true,
         }),
     ],
 })
