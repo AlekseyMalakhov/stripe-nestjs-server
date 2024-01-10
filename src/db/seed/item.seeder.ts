@@ -8,10 +8,17 @@ export default class UserSeeder implements Seeder {
         await repository.insert([
             {
                 name: "Milk",
-                price: 12,
-                // created_at: () => "2024-01-01 08:10:10+00",
-                status: "paid",
+                price: 5,
+            },
+            {
+                name: "Bread",
+                price: 9,
+            },
+            {
+                name: "Cheese",
+                price: 14,
             },
         ]);
+        console.log("Seeding complete");
     }
 }

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm";
 
 export type ItemStatus = "paid" | "unpaid";
 
@@ -10,8 +10,8 @@ export class Item {
     @Column()
     name: string;
 
-    // @Column({ type: "timestamptz" })
-    // created_at: number;
+    @CreateDateColumn()
+    created_at: Date;
 
     @Column({
         type: "enum",
