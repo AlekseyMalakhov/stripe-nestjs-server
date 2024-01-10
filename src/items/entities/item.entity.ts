@@ -13,12 +13,12 @@ export class Item {
     // @Column({ type: "timestamptz" })
     // created_at: number;
 
-    // @Column({
-    //     type: "enum",
-    //     enum: ["paid", "unpaid"],
-    //     default: "unpaid",
-    // })
-    // status: ItemStatus;
+    @Column({
+        type: "enum",
+        enum: ["paid", "unpaid"],
+        default: "unpaid",
+    })
+    status: ItemStatus;
 
     @Column({ type: "decimal" })
     price: number;
