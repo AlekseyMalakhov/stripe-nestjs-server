@@ -1,13 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Item } from "src/items/entities/item.entity";
 import "dotenv/config";
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 @Injectable()
 export class PaymentService {
+    constructor(@InjectRepository(Item) private usersRepository: Repository<Item>) {}
+
     async create(createPaymentDto: CreatePaymentDto) {
-        const price = 10 * 100;
+        const id = createPaymentDto.id;
+        const item = await this.usersRepository.findOneBy({ id });
+        const price = item.price * 100;
 
         // Create a PaymentIntent with the order amount and currency
         const paymentIntent = await stripe.paymentIntents.create({
