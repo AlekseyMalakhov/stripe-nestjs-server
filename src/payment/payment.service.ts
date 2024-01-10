@@ -4,8 +4,6 @@ import "dotenv/config";
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
-console.log(process.env.STRIPE_KEY);
-
 @Injectable()
 export class PaymentService {
     async create(createPaymentDto: CreatePaymentDto) {
