@@ -23,6 +23,10 @@ export class PaymentService {
             automatic_payment_methods: {
                 enabled: true,
             },
+            metadata: {
+                orderId: id,
+                price,
+            },
         });
 
         return { clientSecret: paymentIntent.client_secret };
