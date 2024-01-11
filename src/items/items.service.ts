@@ -12,11 +12,12 @@ export class ItemsService {
         @InjectRepository(Item) private usersRepository: Repository<Item>
     ) {}
 
-    findAll(): Promise<Item[]> {
-        return this.usersRepository.find();
+    async findAll(): Promise<Item[]> {
+        return await this.usersRepository.find();
     }
 
-    update(id: number, updateItemsDto: UpdateItemsDto) {
+    async update(id: number, updateItemsDto: UpdateItemsDto) {
+        await this.usersRepository.update(id, updateItemsDto);
         return `This action updates a #${id} item`;
     }
 }
