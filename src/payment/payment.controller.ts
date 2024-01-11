@@ -2,7 +2,7 @@ import { Controller, Post, Body } from "@nestjs/common";
 import { PaymentService } from "./payment.service";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
 import { SuccessPaymentDto } from "./dto/success-payment.dto";
-import { ItemsService } from "src/items/items.service";
+import { ItemsService } from "../items/items.service";
 
 @Controller("payment-intent")
 export class PaymentController {

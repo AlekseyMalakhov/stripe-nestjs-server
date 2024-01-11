@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Item } from "src/items/entities/item.entity";
+import { Item } from "../items/entities/item.entity";
 import "dotenv/config";
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_KEY);
