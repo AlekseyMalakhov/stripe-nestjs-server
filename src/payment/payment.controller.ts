@@ -1,23 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
+import { Controller, Post, Body } from "@nestjs/common";
 import { PaymentService } from "./payment.service";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
-import { UpdatePaymentDto } from "./dto/update-payment.dto";
 import { SuccessPaymentDto } from "./dto/success-payment.dto";
+import { ItemsService } from "src/items/items.service";
 
 @Controller("payment-intent")
 export class PaymentController {
-    constructor(private readonly paymentService: PaymentService) {}
+    constructor(
+        private readonly paymentService: PaymentService,
+        private readonly itemsService: ItemsService
+    ) {}
 
     @Post()
-    create(@Body() createPaymentDto: CreatePaymentDto) {
-        return this.paymentService.create(createPaymentDto);
+    async create(@Body() createPaymentDto: CreatePaymentDto) {
+        return await this.paymentService.create(createPaymentDto);
     }
 
     @Post("succeed")
-    success(@Body() successPaymentDto: SuccessPaymentDto) {
-        console.log("Payment success");
-        console.log(successPaymentDto.data.object.metadata);
-        return "123";
+    async success(@Body() successPaymentDto: SuccessPaymentDto) {
+        const orderId = successPaymentDto.data.object.metadata.orderId;
+        await this.itemsService.update(orderId, { status: "paid" });
+        return `Order ${orderId} is paid successfully`;
     }
 
     // @Get()
