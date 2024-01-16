@@ -17,8 +17,13 @@ export class ItemsService {
     }
 
     async update(id: number, updateItemsDto: UpdateItemsDto) {
-        const result = await this.usersRepository.update(id, updateItemsDto);
-        console.log(result);
+        //TypeORM update does not have build-in check for existence of id so let's check it manually
+        const exists = await this.usersRepository.existsBy({ id });
+        if (!exists) {
+            //to reject the promise in async function use throw exception
+            throw new Error(`Item ${id} does not exists`);
+        }
+        //const result = await this.usersRepository.update(id, updateItemsDto);
         return `This action updates a #${id} item`;
     }
 }

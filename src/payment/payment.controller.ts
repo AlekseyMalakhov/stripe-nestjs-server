@@ -28,10 +28,12 @@ export class PaymentController {
         try {
             const orderId = successPaymentDto.data.object.metadata.orderId;
             const result = await this.itemsService.update(77, { status: "paid" });
+            console.log("result");
             console.log(result);
             return `Order ${orderId} is paid successfully`;
         } catch (error) {
-            throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+            console.log(error);
+            throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
