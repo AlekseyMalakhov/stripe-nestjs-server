@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -15,6 +15,14 @@ export class ItemsService {
 
     async findAll(): Promise<Item[]> {
         return await this.usersRepository.find();
+    }
+
+    async checkIfPaid(id: number) {
+        const order = await this.usersRepository.findOneBy({ id });
+        if (!order) {
+            throw new HttpException(`Item id = ${id} is not found`, HttpStatus.NOT_FOUND);
+        }
+        return order.status === "paid";
     }
 
     async update(id: number, updateItemsDto: UpdateItemsDto) {

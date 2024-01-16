@@ -24,8 +24,10 @@ export class PaymentService {
                 enabled: true,
             },
             metadata: {
+                //it's a correct place to put order information
                 orderId: id,
                 price,
+                created_at: new Date(Date.now()).toISOString(),
             },
         });
 
