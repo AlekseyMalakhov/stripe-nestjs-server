@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from "@nestjs/common";
+import { Controller, Post, Body, HttpException, HttpStatus } from "@nestjs/common";
 import { PaymentService } from "./payment.service";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
 import { SuccessPaymentDto } from "./dto/success-payment.dto";
@@ -16,11 +16,23 @@ export class PaymentController {
         return await this.paymentService.create(createPaymentDto);
     }
 
+    /*
+    Stripe makes payment and then calls webhook (makes POST request on the provided url).
+    We receive this request and then update our database to change status of the order to paid.
+    If we can't update database and return exception from this webhook call - Stripe does not do anything
+    It does not revoke the transaction and return money to the user.
+    So user can make the second payment request for the same order and it will be accepted!
+    */
     @Post("succeed")
     async success(@Body() successPaymentDto: SuccessPaymentDto) {
-        const orderId = successPaymentDto.data.object.metadata.orderId;
-        await this.itemsService.update(orderId, { status: "paid" });
-        return `Order ${orderId} is paid successfully`;
+        try {
+            const orderId = successPaymentDto.data.object.metadata.orderId;
+            const result = await this.itemsService.update(77, { status: "paid" });
+            console.log(result);
+            return `Order ${orderId} is paid successfully`;
+        } catch (error) {
+            throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+        }
     }
 
     // @Get()

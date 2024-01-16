@@ -17,7 +17,8 @@ export class ItemsService {
     }
 
     async update(id: number, updateItemsDto: UpdateItemsDto) {
-        await this.usersRepository.update(id, updateItemsDto);
+        const result = await this.usersRepository.update(id, updateItemsDto);
+        console.log(result);
         return `This action updates a #${id} item`;
     }
 }
