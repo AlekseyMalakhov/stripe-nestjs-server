@@ -27,13 +27,14 @@ export class PaymentController {
     async success(@Body() successPaymentDto: SuccessPaymentDto) {
         try {
             const orderId = successPaymentDto.data.object.metadata.orderId;
-            const result = await this.itemsService.update(77, { status: "paid" });
-            console.log("result");
-            console.log(result);
+            await this.itemsService.update(orderId, { status: "paid" });
             return `Order ${orderId} is paid successfully`;
-        } catch (error) {
-            console.log(error);
-            throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (err) {
+            const errObj = {
+                message: err.message,
+                stack: err.stack,
+            };
+            throw new HttpException(errObj, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
